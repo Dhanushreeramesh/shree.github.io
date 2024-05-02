@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Royal Place</title>
+        <style>
+            /* Styling for the background */
+            body {
+                background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('thanjavur palace.jpg');
+                height: 100vh;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                color: #fff; /* Text color on the background */
+            }
+            .login{
+                width: 360px;
+                padding:50px;
+                margin: 400px;
+                position: relative;
+                z-index: 1;
+                background:rgb(242, 245, 228);
+                max-width: 0 auto 100px;
+                color: black;
+            }
+            .button {
+                font-size: 20px;
+                padding: 30px 30px 30px 30px;
+                margin: 5px;
+            }
+            </style>
+    </head>
+    <body>
+        <form action="data3.php" method="post">
+            <div class="login">
+                <center>
+                    <p>The Thanjavur Royal Palace, also called the Thanjavur Maratha Palace Complex or simply Aranmanai, is a sprawling heritage site that lies just north of the Brihadeeswarar Temple.</p>
+                    <div class="container">
+                        
+                        <h2>Booking Form:</h2>
+                        <label for="name1">Enter the name:</label>
+                        <input type="text" id="name1" name="name1"><br><br>
+                        
+                        <label for="males">Males:</label>
+                        <input type="number" id="males" name="males" min="0"><br><br>
+                    
+                        <label for="females">Females:</label>
+                        <input type="number" id="females" name="females" min="0"><br><br>
+                        
+                        <label for="children">Children:</label>
+                        <input type="number" id="children" name="children" min="0"><br><br>
+                    
+                        <h2>Timings:</h2>
+                        <label>
+                            <input type="radio" name="tim" value="t1"> 9 AM to 11 AM
+                        </label><br><br>
+                        
+                        <label>
+                            <input type="radio" name="tim" value="t2"> 11 AM to 1 PM
+                        </label><br><br>
+                        
+                        <label>
+                            <input type="radio" name="tim" value="t3"> 2 PM to 4 PM
+                        </label><br><br>
+    
+                        <button type="button" onclick="calculateAmount()">Calculate Amount</button><br>
+                  
+                        <h3>Total Amount: <span id="totalAmountSpan"> </span></h3>
+                        <input type="hidden" id="totalAmountInput" name="totalAmount"> <!-- Hidden input field to store total amount -->
+                        <button type="button" onclick="checkTiming()">Check</button>
+                        <button type="submit">Book Now</button>
+                    </div>
+                </center>
+            </div>
+                  
+        <script>
+            function calculateAmount() {
+                const males = parseInt(document.getElementById("males").value, 10) || 0;
+                const females = parseInt(document.getElementById("females").value, 10) || 0;
+                const children = parseInt(document.getElementById("children").value, 10) || 0;
+    
+                const pricePerMale = 100; // Change this to your desired price per person
+                const pricePerFemale = 100;
+                const pricePerChildren = 50;
+                const totalAmount = males * pricePerMale + females * pricePerFemale + children * pricePerChildren;
+                
+                document.getElementById("totalAmountSpan").textContent = "Rs " + totalAmount;
+                document.getElementById("totalAmountInput").value = totalAmount; // Assign total amount to hidden input field
+            }
+    
+            function checkTiming() {
+                const timings = document.getElementsByName("tim");
+                let selectedTiming = null;
+                var t1 = 5;
+                var t2 = 10;
+                var t3 = 10;
+                for (let i = 0; i < timings.length; i++) {
+                    if (timings[i].checked) {
+                        selectedTiming = timings[i].value;
+                        break;
+                    }
+                }
+    
+                if (selectedTiming !== null) {
+                    const totalMales = parseInt(document.getElementById("males").value, 10) || 0;
+                    const totalFemales = parseInt(document.getElementById("females").value, 10) || 0;
+                    const totalChildren = parseInt(document.getElementById("children").value, 10) || 0;
+                    const totalAttendees = totalMales + totalFemales + totalChildren;
+    
+                    if (selectedTiming === "t1" && totalAttendees > 0 && totalAttendees <= t1) {
+                        alert("Timings: 9 AM to 11 AM - Slot available for " + totalAttendees + " attendees.");
+                    } else if (selectedTiming === "t2" && totalAttendees > 0 && totalAttendees <= t2) {
+                        alert("Timings: 11 AM to 1 PM - Slot available for " + totalAttendees + " attendees.");
+                    } else if (selectedTiming === "t3" && totalAttendees > 0 && totalAttendees <= t3) {
+                        alert("Timings: 2 PM to 4 PM - Slot available for " + totalAttendees + " attendees.");
+                    } else {
+                        alert("Slot is filled please select another timing slot");
+                    }
+                } else {
+                    alert("Please select a timing.");
+                }
+            }
+            
+            function display() {
+                alert("Tickets booked!");
+            }
+              
+        </script>
+        </form>
+    </body>
+    </html>
+    
